@@ -1,5 +1,4 @@
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
 
 // ** Icons Imports
 
@@ -9,7 +8,6 @@ import Grid from '@mui/material/Grid'
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
 
 const Dashboard = () => {
   return (

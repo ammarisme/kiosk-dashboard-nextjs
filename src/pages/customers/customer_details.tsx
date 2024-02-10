@@ -1,9 +1,7 @@
-// CustomerDetailsModal.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Modal, Box, Typography, IconButton, Tooltip, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Tab } from '@mui/material';
+import { Modal, Box, Typography, IconButton, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import FileCopyIcon from 'mdi-material-ui/ContentCopy'
-import Flex from '@mui/material'
 
 interface CustomerDetailsModalProps {
     isOpen: boolean;
@@ -25,10 +23,6 @@ const CustomerDetailsModal: React.FC<CustomerDetailsModalProps> = ({ isOpen, onC
                 }
                 );
                 console.log(response.data)
-                // headers: {
-                //     "Content-Type": "application/json",
-                //     "Authorization": "Basic " + Settings.TOKEN
-                //   },
                 setCustomerDetails(response.data);
             } catch (error) {
                 console.error('Error fetching customer details:', error);

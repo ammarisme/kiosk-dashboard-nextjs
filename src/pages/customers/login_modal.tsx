@@ -15,7 +15,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   };
 
   return (
-    <Modal open={true} onClose={() => {}} /* Replace the onClose handler with your logic to close the modal */>
+    <Modal open={true} onClose={() => {
+      console.log("close")
+    }} /* Replace the onClose handler with your logic to close the modal */>
       <Box
         sx={{
           position: 'absolute',

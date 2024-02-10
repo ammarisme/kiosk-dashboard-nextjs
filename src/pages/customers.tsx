@@ -1,14 +1,13 @@
+
 // ** MUI Imports
 import { Button, Card, TableContainer } from '@mui/material'
 import Grid from '@mui/material/Grid'
+
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -26,19 +25,17 @@ import LoginModal from './customers/login_modal'
 
 // ** Demo Components Imports
 interface RowType {
-  id:number,
+  id: number,
   name: string
   email: string
   phone_number: string
 }
-const rows: RowType[] = [
-]
 
 const Customers = () => {
 
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRowId, setSelectedRowId] = useState<string | number | null>(null);
+  const [selectedRowId, setSelectedRowId] = useState<string | number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(true);
 
@@ -46,14 +43,14 @@ const Customers = () => {
   useEffect(() => {
     fetchData();
     connectToSocket(); // Connect to the Socket.IO server
-  },  [isLoggedIn]);
+  }, [isLoggedIn]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:5000/customer');
       if (Array.isArray(response.data)) {
         const sortedData = response.data.sort((a, b) => b.id - a.id);
-      setData(sortedData as any);
+        setData(sortedData as any);
       } else {
         console.error('API response is not an array:', response.data);
       }
@@ -71,6 +68,7 @@ const Customers = () => {
     });
 
     socket.on('chat message', (msg, serverOffset) => {
+      console.log(serverOffset);
       console.log('Received chat message:', msg);
       handleMoreButtonClick(msg);
 
@@ -87,7 +85,7 @@ const Customers = () => {
   };
 
   const handleCloseModal = () => {
-    setSelectedRowId(null);
+    setSelectedRowId(0);
     setIsModalOpen(false);
   };
 
@@ -98,49 +96,50 @@ const Customers = () => {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      if(username== "catlitter" && password == "catlitter@123"){
+      if (username == "catlitter" && password == "catlitter@123") {
         setIsLoggedIn(true);
-        setLoginModalOpen(false);  
+        setLoginModalOpen(false);
       }
-      
+
     } catch (error) {
       console.error('Error during authentication:', error);
     }
   };
+  
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-        <Card>
+          <Card>
             {/* Reload Button */}
             <Button onClick={handleReload} variant="contained" color="primary" style={{ margin: '10px' }}>
               Reload
             </Button>
-      <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone Number</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row: RowType) => (
-              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.phone_number}</TableCell>
-                <TableCell>
-                <TableCell>
-                        <ArowRight onClick={() => handleMoreButtonClick(row.id)} />
-                      </TableCell>                    </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Card>        </Grid>
+            <TableContainer>
+              <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Phone Number</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row: RowType) => (
+                    <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell>{row.phone_number}</TableCell>
+                      <TableCell>
+                        <TableCell>
+                          <ArowRight onClick={() => handleMoreButtonClick(row.id)} />
+                        </TableCell>                    </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>        </Grid>
       </Grid>
 
       {/* Render the CustomerDetailsModal component */}
