@@ -47,7 +47,7 @@ const Customers = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/customer');
+      const response = await axios.get('http://ec2-13-234-20-8.ap-south-1.compute.amazonaws.com:5001/customer');
       if (Array.isArray(response.data)) {
         const sortedData = response.data.sort((a, b) => b.id - a.id);
         setData(sortedData as any);
@@ -60,7 +60,7 @@ const Customers = () => {
   };
 
   const connectToSocket = () => {
-    const socket = io('http://localhost:4001'); // Replace with your Socket.IO server URL
+    const socket = io('http://ec2-13-234-20-8.ap-south-1.compute.amazonaws.com:4002'); // Replace with your Socket.IO server URL
     // Add your Socket.IO event listeners or emit events here
     // Example:
     socket.on('connect', () => {
@@ -105,7 +105,7 @@ const Customers = () => {
       console.error('Error during authentication:', error);
     }
   };
-  
+
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
